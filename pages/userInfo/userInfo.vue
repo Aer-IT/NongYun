@@ -6,21 +6,7 @@
 				<view class="left-content">
 					<view class="name-row">
 						<text class="username">小农001用户</text>
-						<u-tag text="小农会员" type="warning" size="mini" />
-					</view>
-					<view class="credit-score">
-						<text class="score-text">小农信用分</text>
-						<text class="score-value">99.9</text>
-					</view>
-					<view class="social-stats">
-						<view class="stat-item">
-							<text class="num">60</text>
-							<text class="label">我的关注</text>
-						</view>
-						<view class="stat-item">
-							<text class="num">77</text>
-							<text class="label">我的粉丝</text>
-						</view>
+						<view class="user-tag">普通会员</view>
 					</view>
 				</view>
 				<view class="avatar-wrapper">
@@ -29,20 +15,13 @@
 						:src="userInfo.avatar"
 						@click="changeAvatar"
 					></u-avatar>
-					<view class="vip-entry" @click="goToVip">
-						<text>进入会员中心</text>
-						<u-icon name="arrow-right" size="24" color="#666"></u-icon>
-					</view>
+					<text class="edit-text">编辑</text>
 				</view>
 			</view>
 		</view>
 		
 		<!-- 功能菜单区域 -->
 		<view class="menu-section">
-			<view class="menu-header">
-				<text class="slogan">星光不问赶路人，时光不负新农人</text>
-			</view>
-			
 			<!-- 订单相关 -->
 			<view class="menu-group">
 				<view class="group-title">
@@ -54,10 +33,11 @@
 				</view>
 				<view class="quick-actions">
 					<view class="action-item" v-for="(item, index) in orderActions" :key="index" @click="handleAction(item)">
-						<u-badge :count="item.count" :offset="[-8, -8]">
-							<u-icon :name="item.icon" size="40" color="#666"></u-icon>
+						<u-badge :count="item.count" :offset="[-8, -8]" :show="item.count > 0">
+							<u-icon :name="item.icon" size="44" color="#666"></u-icon>
 						</u-badge>
 						<text>{{ item.text }}</text>
+						<text class="count-text">{{ item.count }}</text>
 					</view>
 				</view>
 			</view>
@@ -81,48 +61,69 @@
 		data() {
 			return {
 				userInfo: {
-					avatar: '/static/avatar/default.png',
-					username: '小农001用户',
-					credit: 99.9,
-					follows: 60,
-					fans: 77
+					avatar: '/static/logo.png',
+					username: '小农001用户'
 				},
 				orderActions: [
-					{ icon: 'wallet', text: '待付款', count: 2 },
-					{ icon: 'car', text: '待收货', count: 1 },
-					{ icon: 'star', text: '待评价', count: 0 },
+					{ icon: 'wallet', text: '待付款', count: 1 },
+					{ icon: 'car', text: '待发货', count: 1 },
+					{ icon: 'star', text: '待评价', count: 1 },
 					{ icon: 'server-fill', text: '售后', count: 0 }
 				],
 				menuItems: [
-					{ icon: 'photo', text: '我的作品' },
-					{ icon: 'star-fill', text: '收藏夹' },
-					{ icon: 'trash', text: '回收站' },
 					{ icon: 'map', text: '收货地址' },
-					{ icon: 'chat', text: '客服中心' },
+					{ icon: 'shopping-cart', text: '购物车' },
 					{ icon: 'setting', text: '设置' }
 				]
 			}
 		},
 		methods: {
 			changeAvatar() {
-				// TODO: 实现更换头像功能
-				console.log('更换头像');
-			},
-			goToVip() {
-				// TODO: 跳转会员中心
-				console.log('进入会员中心');
+				// 实现更换头像功能
+				uni.chooseImage({
+					count: 1,
+					success: (res) => {
+						// 这里只是示例，实际应该上传到服务器
+						this.userInfo.avatar = res.tempFilePaths[0];
+						uni.showToast({
+							title: '头像更新成功',
+							icon: 'success'
+						});
+					}
+				});
 			},
 			viewAllOrders() {
-				// TODO: 查看全部订单
-				console.log('查看全部订单');
+				// 查看全部订单
+				uni.navigateTo({
+					url: '/pages/userInfo/order?tab=all'
+				});
 			},
 			handleAction(item) {
-				// TODO: 处理订单相关操作
-				console.log('订单操作:', item.text);
+				// 处理订单相关操作
+				uni.navigateTo({
+					url: `/pages/userInfo/order?tab=${item.text === '待付款' ? 'pending' : item.text === '待发货' ? 'shipping' : item.text === '待评价' ? 'completed' : item.text === '售后' ? 'afterSale' : 'all'}`
+				});
 			},
 			handleMenu(item) {
-				// TODO: 处理菜单项点击
-				console.log('菜单点击:', item.text);
+				// 处理菜单项点击
+				let url = '';
+				switch(item.text) {
+					case '收货地址':
+						url = '/pages/userInfo/address';
+						break;
+					case '购物车':
+						url = '/pages/userInfo/shopCart';
+						break;
+					case '设置':
+						url = '/pages/userInfo/settings';
+						break;
+					default:
+						url = '';
+				}
+				
+				if(url) {
+					uni.navigateTo({ url });
+				}
 			}
 		}
 	}
@@ -135,12 +136,13 @@
 	
 	.user-header {
 		background: linear-gradient(to right, #ff9500, #ff5722);
-		padding: 40rpx 30rpx;
+		padding: 50rpx 30rpx;
 		color: #ffffff;
 		
 		.user-info {
 			display: flex;
 			justify-content: space-between;
+			align-items: center;
 			
 			.left-content {
 				flex: 1;
@@ -148,48 +150,18 @@
 				.name-row {
 					display: flex;
 					align-items: center;
-					margin-bottom: 20rpx;
 					
 					.username {
-						font-size: 36rpx;
+						font-size: 40rpx;
 						font-weight: bold;
 						margin-right: 16rpx;
 					}
-				}
-				
-				.credit-score {
-					margin-bottom: 30rpx;
 					
-					.score-text {
-						font-size: 26rpx;
-						margin-right: 12rpx;
-					}
-					
-					.score-value {
-						font-size: 40rpx;
-						font-weight: bold;
-						color: #ffe400;
-					}
-				}
-				
-				.social-stats {
-					display: flex;
-					gap: 40rpx;
-					
-					.stat-item {
-						display: flex;
-						flex-direction: column;
-						
-						.num {
-							font-size: 32rpx;
-							font-weight: bold;
-							margin-bottom: 4rpx;
-						}
-						
-						.label {
-							font-size: 24rpx;
-							opacity: 0.9;
-						}
+					.user-tag {
+						background-color: rgba(255, 255, 255, 0.2);
+						border-radius: 30rpx;
+						padding: 4rpx 16rpx;
+						font-size: 22rpx;
 					}
 				}
 			}
@@ -199,18 +171,10 @@
 				flex-direction: column;
 				align-items: center;
 				
-				.vip-entry {
-					margin-top: 16rpx;
-					display: flex;
-					align-items: center;
-					background: rgba(255, 255, 255, 0.2);
-					padding: 6rpx 16rpx;
-					border-radius: 30rpx;
-					
-					text {
-						font-size: 24rpx;
-						margin-right: 8rpx;
-					}
+				.edit-text {
+					font-size: 24rpx;
+					margin-top: 10rpx;
+					opacity: 0.8;
 				}
 			}
 		}
@@ -222,21 +186,10 @@
 		background: #ffffff;
 		padding: 30rpx;
 		
-		.menu-header {
-			text-align: center;
-			margin-bottom: 30rpx;
-			
-			.slogan {
-				font-size: 28rpx;
-				color: #666666;
-				font-style: italic;
-			}
-		}
-		
 		.menu-group {
 			background: #ffffff;
 			border-radius: 16rpx;
-			padding: 24rpx;
+			padding: 30rpx 24rpx;
 			margin-bottom: 20rpx;
 			box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
 			
@@ -268,17 +221,28 @@
 			.quick-actions {
 				display: grid;
 				grid-template-columns: repeat(4, 1fr);
-				gap: 20rpx;
+				gap: 10rpx;
 				
 				.action-item {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					gap: 12rpx;
+					padding: 20rpx 0;
 					
 					text {
-						font-size: 26rpx;
+						font-size: 24rpx;
 						color: #666666;
+					}
+					
+					.count-text {
+						font-size: 22rpx;
+						color: #999;
+					}
+					
+					&:active {
+						background-color: #f8f8f8;
+						border-radius: 10rpx;
 					}
 				}
 			}
@@ -305,6 +269,10 @@
 				
 				&:active {
 					background-color: #f8f8f8;
+				}
+				
+				&:last-child {
+					border-bottom: none;
 				}
 			}
 		}

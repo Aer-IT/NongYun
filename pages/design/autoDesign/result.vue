@@ -38,15 +38,15 @@
 				<!-- 环保标签 -->
 				<view class="eco-tags">
 					<view class="eco-tag">
-						<text class="iconfont icon-eco"></text>
+						<u-icon name="star" color="#27ae60" size="40"></u-icon>
 						<text class="tag-text">环保材质</text>
 					</view>
 					<view class="eco-tag">
-						<text class="iconfont icon-recycle"></text>
+						<u-icon name="reload" color="#27ae60" size="40"></u-icon>
 						<text class="tag-text">可回收</text>
 					</view>
 					<view class="eco-tag">
-						<text class="iconfont icon-natural"></text>
+						<u-icon name="star" color="#27ae60" size="40"></u-icon>
 						<text class="tag-text">天然原料</text>
 					</view>
 				</view>
@@ -56,14 +56,14 @@
 		<!-- 底部区域：功能按钮 -->
 		<view class="action-buttons">
 			<view class="action-button save-button" @tap="handleSave">
-				<text class="iconfont icon-save"></text>
+				<u-icon name="download" color="#3498db" size="44"></u-icon>
 				<text class="button-text">保存设计</text>
 			</view>
 			<view class="action-button order-button" @tap="handleOrder">
 				<text class="button-text">立即下单</text>
 			</view>
 			<view class="action-button change-button" @tap="handleChange">
-				<text class="iconfont icon-refresh"></text>
+				<u-icon name="reload" color="#3498db" size="44"></u-icon>
 				<text class="button-text">换个试试</text>
 			</view>
 		</view>
@@ -71,7 +71,9 @@
 		<!-- 成功提示弹窗 -->
 		<view class="toast-container" v-if="showToast">
 			<view class="toast-content">
-				<text :class="['iconfont', toastIcon === 'success' ? 'icon-success' : 'icon-error']"></text>
+				<u-icon :name="toastIcon === 'success' ? 'checkmark-circle' : 'close-circle'" 
+					:color="toastIcon === 'success' ? '#27ae60' : '#e74c3c'" 
+					size="60"></u-icon>
 				<text class="toast-text">{{ toastMessage }}</text>
 			</view>
 		</view>
@@ -368,15 +370,10 @@
 						flex-direction: column;
 						align-items: center;
 						
-						.iconfont {
-							font-size: 40rpx;
-							color: #27ae60;
-							margin-bottom: 8rpx;
-						}
-						
 						.tag-text {
 							font-size: 24rpx;
 							color: #7f8c8d;
+							margin-top: 8rpx;
 						}
 					}
 				}
@@ -399,14 +396,10 @@
 				border-radius: 16rpx;
 				transition: all 0.3s ease;
 				
-				.iconfont {
-					font-size: 48rpx;
-					margin-bottom: 12rpx;
-				}
-				
 				.button-text {
 					font-size: 28rpx;
 					font-weight: 500;
+					margin-top: 10rpx;
 				}
 				
 				&:active {
@@ -437,6 +430,7 @@
 				.button-text {
 					font-size: 32rpx;
 					font-weight: 600;
+					margin-top: 0;
 				}
 			}
 			
@@ -465,64 +459,11 @@
 				flex-direction: column;
 				align-items: center;
 				
-				.iconfont {
-					font-size: 64rpx;
-					margin-bottom: 16rpx;
-					
-					&.icon-success {
-						color: #27ae60;
-					}
-					
-					&.icon-error {
-						color: #e74c3c;
-					}
-				}
-				
 				.toast-text {
 					font-size: 32rpx;
+					margin-top: 16rpx;
 				}
 			}
 		}
-	}
-	
-	// 图标字体
-	@font-face {
-		font-family: "iconfont";
-		src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAQEAAsAAAAACGQAAAO2AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDHAqEBINYATYCJAMQCwoABCAFhG0HPRvSBxEVnCPIfhzkZrw0ChWqVMXxahWr1h6PB/+N37/fzpn7RZMmiURDNEqIRIJEpUOlE6JkCIXo8v9v2jeELKZZnmWRJgu0aVKgWVINm5PN5eBwadoCy2ddl2VwOMFoAY01aY+9QQcYRV5A78DbgXiawO1ECrCzsrELowrjWSBOJsYMjCbKKg+l0FTMLYtLMNc0p+kZXAS+L/8sR2hIagVjx/7jyRj0/dz8XJaF/v9cZrcOsJ8OtIsCDCwDGYhLlf4zKIQvw3BrZWMXUFeTpO7n5ufyzy3/f4xwRG3IP54gyhhNF2A7MFrwcwtBws9VCRl+bkrI8fOLEgp+Ltu8Ym1QD9wAcRPEO8C6oigpNQ3btGSJ3rTZMzRnzZqJc+bMnOW5YIFnEb948eIlixdPmzVrJi5atAjnzp2Lc+bMmTBv3jwdXrBgQQkvXrx4ycKFC6cvWLBg5qJFi2YuXrx4+pIlS6YvXbp0yrJly6YsX758ytq1a6euW7du6vr166dt2LBh2saNG6dt2rRp2ubNm6dt2bJl2tatW6dt27Zt2vbt26ft2LFj2s6dO6ft2rVr2u7du6ft2bNn2t69e6ft27dv2v79+6cfOHBg+sGDB6cfOnRo+uHDh6cfOXJk+tGjR6cfO3Zs+vHjx6efOHFi+smTJ6efOnVq+unTp6efOXNm+tmzZ6efO3du+vnz56dfuHBh+sWLF6dfunRp+uXLl6dfuXJl+tWrV6dfu3Zt+vXr16ffuHFj+s2bN6ffunVr+u3bt6ffuXNn+t27d6ffu3dv+v3796c/ePBg+sOHD6c/evRo+uPHj6c/efJk+tOnT6c/e/Zs+vPnz6e/ePFi+suXL6e/evVq+uvXr6e/efNm+tu3b6e/e/du+vv376d/+PBh+sePH6d/+vRp+ufPn6d/+fJl+tevX6d/+/Zt+vfv36f/+PFj+s+fP6f/+vVr+u/fv/8fAFDq0YOzZnl6zpzp6eXlNcPLy8vby8vL18vLy8/Ly8vfy8srwMvLK9DLyyvIy8sr2MvLK8TLyyvUy8srzMvLK9zLyyvCy8sr0svLK8rLyyvay8srxsvLK9bLyyvOy8sr3svLK8HLyyvRy8srycvLK9nLyyvFy8sr1cvLK83LyyvdywtA9X8v/H8BAAD//wMAUdBsaA==') format('woff2');
-	}
-
-	.iconfont {
-		font-family: "iconfont" !important;
-		font-style: normal;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-	}
-
-	.icon-save:before {
-		content: "\e600";
-	}
-
-	.icon-refresh:before {
-		content: "\e601";
-	}
-
-	.icon-success:before {
-		content: "\e602";
-	}
-
-	.icon-eco:before {
-		content: "\e603";
-	}
-
-	.icon-recycle:before {
-		content: "\e604";
-	}
-
-	.icon-natural:before {
-		content: "\e605";
-	}
-	
-	.icon-error:before {
-		content: "\e606";
 	}
 </style>

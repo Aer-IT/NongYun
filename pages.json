@@ -10,14 +10,14 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "穗智云盒"
 			}
 		},
 		{
 			"path" : "pages/community/community",
 			"style" : 
 			{
-				"navigationBarTitleText" : "uniapp"
+				"navigationBarTitleText" : ""
 			}
 		},
 		{
@@ -70,13 +70,6 @@
 			}
 		},
 		{
-			"path" : "pages/design/selfDesign/selfDesign",
-			"style" : 
-			{
-				"navigationBarTitleText" : ""
-			}
-		},
-		{
 			"path" : "pages/design/autoDesign/secondStep",
 			"style" : 
 			{
@@ -113,6 +106,55 @@
 		},
 		{
 			"path" : "pages/community/components/consult/details",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/index/boxList",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/shopDetail/shopList",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/userInfo/order",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/userInfo/shopCart",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/design/selfDesign/templateList",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/design/selfDesign/Details",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/design/selfDesign/startDesign",
 			"style" : 
 			{
 				"navigationBarTitleText" : ""

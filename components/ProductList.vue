@@ -12,7 +12,6 @@
 					</div>
 					<div class="product-stats">
 						<span>销量：{{ item.sales }}</span>
-						<span>收藏：{{ item.favorites }}</span>
 					</div>
 				</view>
 			</view>

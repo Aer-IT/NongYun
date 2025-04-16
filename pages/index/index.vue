@@ -170,12 +170,25 @@
 						url: '/pages/design/design'
 					});
 				}
+				else if(feature === 'shop'){
+					uni.navigateTo({
+						url: '/pages/shopDetail/shopList'
+					});
+				}
+				else if(feature === 'template'){
+					uni.navigateTo({
+						url: '/pages/design/selfDesign/templateList'
+					});
+				}
 			},
 			
 			// 处理盒型点击
 			handleBoxTypeClick(type) {
 				console.log('选择盒型:', type);
 				// TODO: 处理盒型选择逻辑
+				uni.navigateTo({
+					url: '/pages/index/boxList'
+				});
 			},
 			
 			// 处理新闻点击

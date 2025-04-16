@@ -4,7 +4,7 @@
 		<!-- 主要内容区 -->
 		<scroll-view scroll-y class="content-scroll">
 			<!-- 图片浏览器 -->
-			<swiper class="swiper" circular :indicator-dots="detail.images.length > 1" indicator-active-color="#FF6B6B">
+			<swiper class="swiper" circular :indicator-dots="detail.images.length > 1" indicator-active-color="#4CAF50">
 				<swiper-item v-for="(img, index) in detail.images" :key="index" @click="previewImage(img)">
 					<image class="main-image" :src="img" mode="aspectFit"></image>
 				</swiper-item>
@@ -24,10 +24,9 @@
 					<text v-for="(tag, index) in tagList" :key="index" class="tag-item">#{{ tag }}</text>
 				</view>
 				
-				<!-- 相关搜索 -->
+				<!-- 产地信息 -->
 				<view class="related-search" @click="handleSearch">
-					<u-icon name="search" size="24" color="#999"></u-icon>
-					<text>相关搜索 · </text>
+					<text>🌱 产地信息：</text>
 					<text class="search-keyword">{{ detail.relatedSearch }}</text>
 					<u-icon name="arrow-right" size="24" color="#999"></u-icon>
 				</view>
@@ -43,7 +42,6 @@
 			<view class="comment-section">
 				<view class="comment-header">
 					<text class="comment-count">共{{ commentList.length }}条评论</text>
-					<text class="comment-tip">爱评论的人运气都不差</text>
 				</view>
 				
 				<!-- 评论列表 -->
@@ -62,7 +60,7 @@
 								<text class="comment-time">{{ comment.time }}</text>
 								<view class="comment-btns">
 									<view class="comment-like" @click="toggleCommentLike(index)">
-										<u-icon :name="comment.isLiked ? 'thumb-up-fill' : 'thumb-up'" :size="24" :color="comment.isLiked ? '#ff6b6b' : '#999'"></u-icon>
+										<u-icon :name="comment.isLiked ? 'thumb-up-fill' : 'thumb-up'" :size="24" :color="comment.isLiked ? '#4CAF50' : '#999'"></u-icon>
 										<text :class="{'active': comment.isLiked}">{{ comment.likes }}</text>
 									</view>
 									<view class="comment-reply" @click="replyComment(comment)">
@@ -81,13 +79,13 @@
 		<view class="bottom-bar">
 			<!-- 评论输入框 -->
 			<view class="comment-input-wrapper" @click="focusComment">
-				<text class="placeholder-text">说点什么...</text>
+				<text class="placeholder-text">说说你对这款农产品的看法...</text>
 			</view>
 			
 			<!-- 互动按钮 -->
 			<view class="action-icons">
 				<view class="action-item" @click="toggleLike">
-					<u-icon :name="detail.isLiked ? 'heart-fill' : 'heart'" :size="28" :color="detail.isLiked ? '#ff6b6b' : '#666'"></u-icon>
+					<u-icon :name="detail.isLiked ? 'heart-fill' : 'heart'" :size="28" :color="detail.isLiked ? '#4CAF50' : '#666'"></u-icon>
 					<text>{{ detail.likes }}</text>
 				</view>
 				<view class="action-item">
@@ -113,14 +111,14 @@
 						v-model="commentText" 
 						auto-height 
 						maxlength="200"
-						placeholder="说点什么..." 
+						placeholder="说说你对这款农产品的看法..." 
 						focus
 						class="comment-textarea"
 					></textarea>
 					<text class="comment-count">{{ commentText.length }}/200</text>
 				</view>
 				<view class="comment-popup-footer">
-					<u-button type="primary" size="medium" @click="submitComment">发布</u-button>
+					<u-button type="primary" size="medium" @click="submitComment" style="background-color: #4CAF50;">发布</u-button>
 				</view>
 			</view>
 		</u-popup>
@@ -137,32 +135,32 @@ export default {
 			detail: {
 				id: 0,
 				images: ['/static/logo.png'],
-				username: '创作达人',
+				username: '乡村好物推荐官',
 				avatar: '/static/logo.png',
 				likes: 245,
 				stars: 28,
 				isLiked: false,
-				description: '捣鼓了一晚上，终于是拍出了一张顶天立地小白狗\n不过还是少了点感觉',
+				description: '【现摘现发】这批砀山酥梨真的太香甜多汁了！\n产地直发，不打蜡不催熟，皮薄核小，汁多味甜，脆嫩爽口，冰箱冷藏后口感更佳～',
 				publishTime: '02-27',
-				location: '广西',
-				tag: '#线条小狗#马尔济斯#线条小狗#线条小狗盲盒',
-				relatedSearch: '名创优品线条小狗盲盒'
+				location: '安徽砀山',
+				tag: '#砀山酥梨#当季水果#产地直发#现摘现发',
+				relatedSearch: '砀山梨产地直发'
 			},
-			tagList: ['线条小狗', '马尔济斯', '线条小狗', '线条小狗盲盒'],
+			tagList: ['砀山酥梨', '当季水果', '产地直发', '现摘现发'],
 			commentList: [
 				{
 					username: '爱评论的人运气都不差',
 					avatar: '/static/logo.png',
-					content: '',
+					content: '买过的人都说好',
 					time: '',
 					likes: 0,
 					isLiked: false,
 					replies: 0
 				},
 				{
-					username: '玛嘉烈',
+					username: '果果妈妈',
 					avatar: '/static/logo.png',
-					content: '说点什么...',
+					content: '已经买过三次了，真的超级好吃！孩子们都很喜欢，老人吃也不怕硬，真是全家人的最爱~',
 					time: '刚刚',
 					likes: 299,
 					isLiked: false,
@@ -190,16 +188,16 @@ export default {
 				this.detail = {
 					id: this.id || 1,
 					images: ['/static/logo.png'],
-					username: '创作达人',
+					username: '乡村好物推荐官',
 					avatar: '/static/logo.png',
 					likes: 245,
 					stars: 28,
 					isLiked: false,
-					description: '捣鼓了一晚上，终于是拍出了一张顶天立地小白狗\n不过还是少了点感觉',
+					description: '【现摘现发】这批砀山酥梨真的太香甜多汁了！\n产地直发，不打蜡不催熟，皮薄核小，汁多味甜，脆嫩爽口，冰箱冷藏后口感更佳～\n五斤装只要29.9元，十斤装更划算，买就送专用果袋和削皮刀！',
 					publishTime: '02-27',
-					location: '广西',
-					tag: '#线条小狗#马尔济斯#线条小狗#线条小狗盲盒',
-					relatedSearch: '名创优品线条小狗盲盒'
+					location: '安徽砀山',
+					tag: '#砀山酥梨#当季水果#产地直发#现摘现发',
+					relatedSearch: '砀山梨产地直发'
 				};
 				
 				// 解析标签
@@ -304,7 +302,7 @@ export default {
 			this.closeCommentPopup();
 			
 			uni.showToast({
-				title: '评论成功',
+				title: '评论成功，会有机会获得新人优惠券哦',
 				icon: 'success'
 			});
 		}
@@ -334,7 +332,7 @@ export default {
 			width: 100%;
 			height: 100%;
 			display: block;
-			background-color: #f5f7f9; // 浅青色背景
+			background-color: #f8fbf5; // 更改为浅绿色背景，更符合农产品感觉
 		}
 	}
 	
@@ -351,7 +349,7 @@ export default {
 			margin: 0 8rpx;
 			
 			&.active {
-				background-color: #FF6B6B;
+				background-color: #4CAF50; // 更改为绿色，更符合农产品感觉
 			}
 		}
 	}
@@ -373,7 +371,7 @@ export default {
 			
 			.tag-item {
 				font-size: 28rpx;
-				color: #555555;
+				color: #4CAF50; // 更改为绿色，更符合农产品感觉
 				margin-right: 8rpx;
 				display: inline-block;
 			}
@@ -427,7 +425,7 @@ export default {
 			
 			.comment-tip {
 				font-size: 26rpx;
-				color: #999999;
+				color: #4CAF50; // 更改为绿色，更符合农产品感觉
 			}
 		}
 		
@@ -488,7 +486,7 @@ export default {
 									margin-left: 6rpx;
 									
 									&.active {
-										color: #ff6b6b;
+										color: #4CAF50;
 									}
 								}
 							}

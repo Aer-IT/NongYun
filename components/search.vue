@@ -85,11 +85,8 @@
 		margin: 0 auto;
 		position: relative;
 		background: #ffffff;
-		border-radius: 20rpx;
-		box-shadow: 0 4rpx 16rpx rgba(102, 207, 200, 0.08);
 		padding: 16rpx;
 		transition: all 0.3s ease;
-		border: 2rpx solid rgba(102, 207, 200, 0.1);
 		
 		&:hover {
 			box-shadow: 0 8rpx 32rpx rgba(102, 207, 200, 0.12);

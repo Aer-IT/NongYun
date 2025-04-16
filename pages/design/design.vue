@@ -79,7 +79,7 @@
 			},
 			handleDIYDesign() {
 				uni.navigateTo({
-					url: '/pages/design/selfDesign/selfDesign'
+					url: '/pages/design/selfDesign/templateList'
 				})
 			}
 		}
